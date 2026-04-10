@@ -51,17 +51,17 @@ app.use(jwtAuth.normalAuthWithCookie); // a middleware to attend in any api call
 app.use("/public/images/materials", express.static("./public/images/materials"))
 app.use("/api", apiRoutes);
 
-app.use((err, req, res, next) => {
-  if (err instanceof multer.MulterError) {
-    if (err.code === "LIMIT_FILE_SIZE") {
-      return res.status(400).json({ error: "File too large. Max 100MB limit." });
-    }
-    return res.status(400).json({ error: err.message });
-  }
+// app.use((err, req, res, next) => {
+//   if (err instanceof multer.MulterError) {
+//     if (err.code === "LIMIT_FILE_SIZE") {
+//       return res.status(400).json({ error: "File too large. Max 100MB limit." });
+//     }
+//     return res.status(400).json({ error: err.message });
+//   }
 
-  console.error(err.stack);
-  res.status(500).json({ error: "Internal Server Error" });
-});
+//   console.error(err.stack);
+//   res.status(500).json({ error: "Internal Server Error" });
+// });
 
 const port = process.env.PORT ? process.env.PORT : 4000;
 app.listen(port, () => {
