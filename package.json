@@ -1,0 +1,29 @@
+{
+  "name": "prep-app",
+  "version": "0.0.1",
+  "description": "a restful api for prep app ",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "genstohub",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.1027.0",
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dompurify": "^3.3.1",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "jsdom": "^28.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "knex": "^3.1.0",
+    "multer": "^2.1.1",
+    "multer-s3": "^3.0.1",
+    "nodemon": "^3.1.10",
+    "pg": "^8.16.3"
+  }
+}

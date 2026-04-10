@@ -1,0 +1,26 @@
+-- Enable UUID generation
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+-- 1. NOTIFICATION EVENTS (The "What")
+CREATE TABLE notification_events (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    actor_id UUID REFERENCES users(id) ON DELETE SET NULL, 
+    type VARCHAR(30) NOT NULL,          -- 'quiz', 'message', 'reminder'
+    entity_id UUID NOT NULL,            -- The specific item ID
+    course_code VARCHAR(50),            -- e.g., 'mth_101'
+    data JSONB NOT NULL,                -- { "title": "...", "body": "...", "link": "..." }
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- 2. NOTIFICATION RECIPIENTS (The "Inbox")
+CREATE TABLE notification_recipients (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    event_id UUID REFERENCES notification_events(id) ON DELETE CASCADE,
+    user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+    is_read BOOLEAN DEFAULT FALSE,
+    is_seen BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Index for speed
+CREATE INDEX idx_user_unread ON notification_recipients (user_id) WHERE is_read = FALSE;
